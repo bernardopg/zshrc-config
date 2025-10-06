@@ -57,7 +57,6 @@ path=(
     $HOME/.local/share/gem/ruby/3.3.0/bin
     $HOME/Scripts
     $HOME/dev/tools/flutter/bin
-    /usr/local/sbin /usr/sbin /sbin
     $path
 )
 [[ -d /mingw64/bin ]] && path+=( /mingw64/bin )
@@ -900,7 +899,7 @@ HELP
           msg "Cleaning old gem versions..."
           local clean_cmd="gem cleanup --quiet 2>&1"
           [[ -n "$sudo" ]] && clean_cmd="$sudo $clean_cmd"
-          timeout 60 eval "$clean_cmd" | grep -vE '(Cleaning|Clean up|warning|already initialized|Skipped|Unable to uninstall|FilePermissionError)' | head -10 || true
+          timeout 60 sh -c "$clean_cmd" | grep -vE '(Cleaning|Clean up|warning|already initialized|Skipped|Unable to uninstall|FilePermissionError)' | head -10 || true
         fi
       else
         info "All gems are up to date"
